@@ -34,10 +34,6 @@ class Oystercard
     log_journey(station)
   end
 
-  def in_journey?
-
-  end
-
   private
 
   def deduct(amount)
@@ -54,7 +50,7 @@ class Oystercard
   end
 
   def already_in?
-    if @journey
+    if !Journey.complete?
       p "You are have been charged with penalty fair of #{@penalty} as you did not touch out on your last journey."
       deduct(@penalty)
       log_journey("n/a")
@@ -62,7 +58,7 @@ class Oystercard
   end
 
   def charge_on_exit
-    if !@journey
+    if !Journey.complete?
       p "You are have been charged with penalty fair of #{@penalty} as you did not touch in."
       deduct(@penalty)
       touch_in("n/a")
